@@ -8,6 +8,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class HomePageTest {
@@ -16,12 +18,14 @@ public class HomePageTest {
     private WebDriverWait wait;
     String url = "http://wooordhunt.ru";
 
+
     String titleExersise = "Упражнения для запоминания/заучивания английский слов онлайн (online)";
     String titleEditor = "WooordHunt-редактор. Онлайн редактор для тех, кто пишет на английском";
     String titleExample = "Перевод примеров";
     String titleExtension = "Дополнения";
 
-
+    public HomePageTest() throws IOException {
+    }
 
     @Before
     public void start() {
@@ -29,12 +33,12 @@ public class HomePageTest {
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, 20);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
     }
 
     @Test
-    public void Menu_box () {
+    public void Menu_box () throws IOException {
         driver.get(url);
+
         HomePage homePage = new HomePage();
         PageFactory.initElements(driver, homePage);
 
@@ -50,7 +54,5 @@ public class HomePageTest {
         WebElement extensions = homePage.extensions;
         homePage.pressBtns(driver, extensions, titleExtension);
     }
-
-
 }
 

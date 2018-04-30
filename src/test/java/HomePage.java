@@ -4,12 +4,21 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class HomePage {
+import java.io.FileWriter;
+import java.io.IOException;
 
+public class HomePage  {
+
+    public HomePage() throws IOException {
+    }
 
     private static WebDriver driver;
     private WebDriverWait wait;
+
+    private static Logger log = (Logger) LoggerFactory.getLogger(HomePage.class);
 
     String url = "http://wooordhunt.ru";
 
@@ -33,17 +42,22 @@ public class HomePage {
         System.out.println(driver.getTitle());
         //Возврат на домашнюю страницу
         driver.get(url);
-
     }
 
-    public void pressBtns (WebDriver driver, WebElement element, String title) {
+    public void pressBtns (WebDriver driver, WebElement element, String title) throws IOException {
 
         element.click();
         Assert.assertEquals(title, driver.getTitle());
-        System.out.println(driver.getTitle());
-        //Возврат на домашнюю страницу
+
+        //Запись названия страницы в файл
+        FileWriter writer = new FileWriter("output.txt", true);
+        writer.write(driver.getTitle() + "\n");
+        writer.close();
+        log.info("Title___" + driver.getTitle());
+
+       //Возврат на домашнюю страницу
         driver.get(url);
 
-    }
+}
 
 }
